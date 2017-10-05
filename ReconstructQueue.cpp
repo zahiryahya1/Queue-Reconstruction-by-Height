@@ -1,31 +1,31 @@
 vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people) {
-	// sorting algorithm by k
-	// then move person by i+1 - k 
-
+	
+	// sort the vector by k values
 	sort(people.begin(), people.end(), sortByK);
 
-	// double loop
-	// for ieach index, count the number of elements bigger, 
-	// compare count with k,
-	// if count is bigger, shift object until count == k
+	// for ieach index, count the number of elements bigger
+	// compare count with k
+	// if count is bigger place the object in the correct index
+	
 	int count = 0;
 	pair<int, int> temp;
-
-	for (int i = 0; i < people.size(); i++) {
-		cout << people[i].first << ", " << people[i].second << endl;
-	}
-
+	
+	
 	for (int i = 0; i < people.size(); i++) {
 		count = 0;
+		
+		// count the number of people taller then current person
 		for (int j = 0; j < i; j++) {
 			if (people[j].first >= people[i].first) {
 				count++;
 			}
 		}
-		// if count is bigger, put in correct spot
+		
+		// if count is bigger, put in correct index by removing the old value
+		// and interting the new value
 		if (count > people[i].second) {
 			temp = people[i];
-			people.erase(people.begin() + i); // - 1?
+			people.erase(people.begin() + i);
 			people.insert(people.begin() + (i - (count - temp.second)), temp);
 		}
 	}
@@ -33,6 +33,7 @@ vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people) {
 	return people;
 }
 
+// sorting algorithm by k, if k's are equal then sort by h 
 static bool sortByK(const pair<int, int> &a, const pair<int, int> &b) {
 	if (a.second < b.second)
 		return true;
